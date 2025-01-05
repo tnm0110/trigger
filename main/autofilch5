@@ -1,0 +1,9 @@
+do file wild *.BHZ*SAC
+read $file$
+message $file
+rmean
+rtrend
+bp co $1 $2 n 3 p 2
+write append
+enddo
+quit

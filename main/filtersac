@@ -1,0 +1,91 @@
+#!/bin/csh
+#
+unset noclobber
+unalias mv
+unalias cp
+unalias r
+#
+if ( $1 == "-h") then
+ goto useage
+endif
+if ( $1 == "") then
+ goto useage
+endif
+if (-d tempfil) then
+ echo "Deleting tempfil directory"
+ sleep 30
+ rm -r tempfil
+endif
+mkdir tempfil
+mkdir tempfil/filter
+# I/0:
+if ( $1 == "all" ) then
+ set evid=""
+else
+ set evid=$1
+endif
+if ( $2 == "" ) then
+ set co1="0.05"
+else
+ set co1=$2
+endif
+if ( $3 == "" ) then
+ set co2="0.5"
+else
+ set co2=$3
+endif
+if ($4 == "" ) then
+ set wdth="0.0"
+else
+ set wdth=$4
+endif 
+echo $wdth
+#echo $co1 $co2
+#if ( $co1 >= $co2 ) then
+# echo "invalid corner frequencies"
+# goto quit
+#endif
+#
+if (-d filter) then
+ echo "The directory filter exists"
+else
+ mkdir filter
+endif
+#set str=$evid'*.sac'
+if ($evid == "") then
+set files=`\ls | grep .sac`
+else
+set files=`\ls | grep $evid | grep .sac`
+endif
+@ z = 0
+foreach file ($files)
+@ z++
+echo $file
+cp $file tempfil
+if ($z == 36) then
+cd tempfil
+echo "macro  $SRCHOME/bin/sacmacs/autofil $co1 $co2 $wdth" | sac2000 >> filter.out
+@ z = 0
+mv filter/*.sac ../filter
+cd ..
+endif
+end
+cd tempfil
+echo "macro  $SRCHOME/bin/sacmacs/autofil $co1 $co2 $wdth" | sac2000 >> filter.out
+mv filter/*.sac ../filter
+endif
+mv filter.out ..
+cd ..
+rm -r tempfil
+echo "finished filtering"
+quit:
+exit
+useage:
+echo "      useage: filtersac fileid co1 co2"
+echo "where fileid is the file id used to create the file list (e.g. 94365_WSMR)"
+echo "co1 and co2 are the minimum and maximum corner frequnecies in Hz"
+
+
+
+
+
