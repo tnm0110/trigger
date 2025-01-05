@@ -1,0 +1,33 @@
+Please follow the instructions to run the codes properly
+
+1.Compile the necessary FORTRAN programs (reftrg2, nettrg2 and rfrmsrch2) and save it your program directory
+
+        ==> inside "main" directory, triggering executable progams are located 
+        ==> use makefile to execute reftrg2 and nettrg2 program
+        ==> execute "rfrmsrch2" located under "reorg" dirctory
+        ==> move all those to your program directory 
+        ==> also save the "autofilch5" sac macro to the prgram directory                           
+
+ 
+2.Prepare the day long sac file organized by station hierarchy
+ 
+3. Run trigger.csh script ( inside the scripts, change the program and data directory accordingly)
+      
+       ==> data directory should contain all stations with the daylong sacfile inside 
+       ==> change the STA, LTA, STA/LTA and other parameters if needed
+
+4. Done. "triggered_events" file will contain all the detected triggered events 
+
+
+
+
+[ See the example dataset if you run into problems ]
+
+Hope this intructions will help.
+ 
+
+Good luck!!
+Mohimanul
+
+
+
